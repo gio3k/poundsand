@@ -2,8 +2,14 @@
 
 public static class Static
 {
+	/// <summary>
+	/// Path to bootstrap assembly (relative to game root dir)
+	/// </summary>
 	public const string BootstrapAssemblyPath = "poundsand\\bootstrap.dll";
 
+	/// <summary>
+	/// Whether or not info text should be printed
+	/// </summary>
 	public static bool ShowInfo = false;
 
 	public static void Info( FormattableString txt )

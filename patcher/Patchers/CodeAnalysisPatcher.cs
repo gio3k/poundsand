@@ -5,8 +5,21 @@ namespace Patcher.Patchers;
 
 public class CodeAnalysisPatcher : IPatcher
 {
+	/// <inheritdoc cref="IPatcher.Patch"/>
 	public bool Patch()
 	{
+		if ( Path == null )
+		{
+			Static.Err( "Path was unset - patch halted!" );
+			return false;
+		}
+
+		if ( OutputPath == null )
+		{
+			Static.Err( "OutputPath was unset - patch halted!" );
+			return false;
+		}
+
 		Static.Info( $"Reading assembly @ {Path} ..." );
 		var assembly = AssemblyDefinition.ReadAssembly( Path,
 			new ReaderParameters { ReadWrite = true, ReadingMode = ReadingMode.Immediate, InMemory = true } );
@@ -54,6 +67,9 @@ public class CodeAnalysisPatcher : IPatcher
 		return true;
 	}
 
+	/// <inheritdoc cref="IPatcher.Path"/>
 	public string Path { get; set; }
+
+	/// <inheritdoc cref="IPatcher.OutputPath"/>
 	public string OutputPath { get; set; }
 }

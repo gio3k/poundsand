@@ -21,6 +21,12 @@ public interface IPatcher
 	/// </summary>
 	public string OutputPath { get; set; }
 
+	/// <summary>
+	/// Create IL instructions to load bootstrap assembly for provided processor and module
+	/// </summary>
+	/// <param name="processor"><see cref="ILProcessor"/> ref</param>
+	/// <param name="module"><see cref="ModuleDefinition"/></param>
+	/// <returns>List / enumerable of instructions</returns>
 	public static IEnumerable<Instruction> CreateLoadInstructions( ref ILProcessor processor, ModuleDefinition module )
 	{
 		var currentDomainPropertyMethod =
