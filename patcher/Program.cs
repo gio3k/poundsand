@@ -9,8 +9,8 @@ public static class Program
 		if ( opts.Verbose )
 			Static.ShowInfo = true;
 
-		Patchers.CodeAnalysisPatcher patcher = new(opts.Path);
-		patcher.Patch();
+		Patchers.CodeAnalysisPatcher patcher = new() { Path = opts.Path };
+		if ( !patcher.Patch() ) Static.Err( "Failed to patch assembly." );
 	}
 
 	private static void Main( string[] args )

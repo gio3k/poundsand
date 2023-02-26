@@ -5,21 +5,6 @@ namespace Patcher.Patchers;
 
 public class CodeAnalysisPatcher : IPatcher
 {
-	public string Path { get; }
-	public string OutputPath { get; }
-
-	public CodeAnalysisPatcher( string path )
-	{
-		Path = path;
-		OutputPath = path;
-	}
-
-	public CodeAnalysisPatcher( string path, string outputPath )
-	{
-		Path = path;
-		OutputPath = outputPath;
-	}
-
 	public bool Patch()
 	{
 		var assembly = AssemblyDefinition.ReadAssembly( Path,
@@ -51,7 +36,7 @@ public class CodeAnalysisPatcher : IPatcher
 
 		// Create IL for the constructor
 		var processor = cctor.Body.GetILProcessor();
-		var patch = Util.CreateLoadInstructions( ref processor, assembly.MainModule );
+		var patch = IPatcher.CreateLoadInstructions( ref processor, assembly.MainModule );
 
 		foreach ( var instruction in patch ) processor.Append( instruction );
 		processor.Append( processor.Create( OpCodes.Ret ) );
@@ -61,4 +46,7 @@ public class CodeAnalysisPatcher : IPatcher
 
 		return true;
 	}
+
+	public string Path { get; set; }
+	public string OutputPath { get; set; }
 }
