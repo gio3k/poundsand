@@ -7,4 +7,22 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Reference Include="Sandbox.Client">
+        <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\sbox\bin\managed\Sandbox.Client.dll</HintPath>
+      </Reference>
+      <Reference Include="Sandbox.Engine">
+        <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\sbox\bin\managed\Sandbox.Engine.dll</HintPath>
+      </Reference>
+      <Reference Include="Sandbox.Game">
+        <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\sbox\bin\managed\Sandbox.Game.dll</HintPath>
+      </Reference>
+      <Reference Include="Sandbox.Generator">
+        <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\sbox\bin\managed\Sandbox.Generator.dll</HintPath>
+      </Reference>
+      <Reference Include="Sandbox.System">
+        <HintPath>..\..\..\Program Files (x86)\Steam\steamapps\common\sbox\bin\managed\Sandbox.System.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
 </Project>
