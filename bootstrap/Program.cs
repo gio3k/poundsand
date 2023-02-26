@@ -18,10 +18,39 @@ static bool ShouldSkipAssembly( string path )
 	return false;
 }
 
+static Assembly ResolveAssemblyHandler( object? sender, ResolveEventArgs args )
+{
+	// Check if we already have the assembly loaded
+	var assembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault( v => v.FullName == args.Name );
+	if ( assembly != null ) return assembly;
+
+	// Try to find the assembly by short name / file name
+	var shortName = args.Name.Split( ',' )[0];
+	var path = Path.Combine( Static.GetFullAssemblyDirectoryPath(), $"{shortName}.dll" );
+
+	if ( ShouldSkipAssembly( path ) ) return null;
+
+	// Check for assembly
+	if ( !Path.Exists( path ) ) return null;
+
+	// Load assembly
+	try
+	{
+		return Assembly.LoadFrom( path );
+	}
+	catch ( Exception e )
+	{
+		Sandbox.Internal.GlobalSystemNamespace.Log.Info( $"error while loading dependency {path}" );
+		Sandbox.Internal.GlobalSystemNamespace.Log.Error( e );
+		return null;
+	}
+}
+
 static void LoadAssemblies()
 {
-	foreach ( var file in Directory.GetFiles(
-		         Path.Combine( Directory.GetCurrentDirectory(), Static.AssemblyDirectoryPath ), "*.dll" ) )
+	AppDomain.CurrentDomain.AssemblyResolve += ResolveAssemblyHandler;
+
+	foreach ( var file in Directory.GetFiles( Static.GetFullAssemblyDirectoryPath(), "*.dll" ) )
 	{
 		// Make sure we aren't loading the current assembly
 		if ( ShouldSkipAssembly( file ) )
@@ -34,6 +63,10 @@ static void LoadAssemblies()
 		try
 		{
 			AppDomain.CurrentDomain.ExecuteAssembly( file );
+		}
+		catch ( MissingMethodException )
+		{
+			// ignored
 		}
 		catch ( Exception e )
 		{
