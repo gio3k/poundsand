@@ -2,7 +2,7 @@
 
 public static class Static
 {
-	public const string BootstrapAssemblyPath = "poundsand\\Bootstrap.dll";
+	public const string BootstrapAssemblyPath = "poundsand\\bootstrap.dll";
 
 	public static bool ShowInfo = false;
 
