@@ -78,8 +78,6 @@ public class Program
 		var shortName = name.Name.Split( ',' )[0];
 		var path = Path.Combine( Static.GetFullAssemblyDirectoryPath(), $"{shortName}.dll" );
 
-		if ( ShouldSkipAssembly( path ) ) return null;
-
 		// Check for assembly
 		if ( !Path.Exists( path ) ) return null;
 
