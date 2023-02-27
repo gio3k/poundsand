@@ -59,7 +59,7 @@ public class Program
 
 		// Create our load context
 		Log.Info( "creating new AssemblyLoadContext..." );
-		Context = new AssemblyLoadContext( "PsLoadContext", true );
+		Context = new AssemblyLoadContext( "PsLoadContext" );
 		Context.Resolving += ResolveAssembly;
 	}
 
